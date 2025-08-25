@@ -12,7 +12,7 @@ public class UserProducer {
     @Autowired
     private RabbitTemplate rabbitTemplate; 
 
-    @Value("${broker.queue.email.name}")
+    @Value(value = "${broker.queue.email.name}")
     private String routingKey;
 
     public void publishMessageEmail(UserModel userModel){
@@ -20,7 +20,8 @@ public class UserProducer {
         emailDto.setUserId(userModel.getUserId());
         emailDto.setEmailTo(userModel.getEmail());
         emailDto.setSubject("Cadastro realizado com sucesso!");
-        emailDto.setText("Olá, " + userModel.getName() + ", seu cadastro foi realizado com sucesso!");
+        emailDto.setText("Seja bem vindo! " + userModel.getName() +
+                ", Agradecemos o seu cadastro, aproveite os nossos serviços disponiveis");
 
         rabbitTemplate.convertAndSend("", routingKey, emailDto);
 
